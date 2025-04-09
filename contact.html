@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bentos Walker - Contact Me</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts - Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <!-- Remix Icon -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+  <!-- Additional CDNs -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <!-- Slick Carousel -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <script>
+    // Configure tailwind for dark mode
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            poppins: ['Poppins', 'sans-serif'],
+          },
+          colors: {
+            orange: {
+              500: '#F26C4F'
+            },
+            // Adding dark and light background colors like in the landing page
+            'dark-primary': '#111',
+            'dark-secondary': '#1f2937',
+            'light-primary': '#ffffff',
+            'light-secondary': '#f3f4f6',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    .animate-fade-in {
+      animation: fadeIn 1s ease-in;
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+    .mobile-menu {
+      transform: translateX(-100%);
+      transition: transform 0.3s ease-in-out;
+    }
+    .mobile-menu.active {
+      transform: translateX(0);
+    }
+    
+    /* Theme toggle styles */
+    .theme-toggle {
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .theme-toggle:hover {
+      transform: rotate(15deg);
+    }
+    
+    /* Contact form styles */
+    .contact-input {
+      width: 100%;
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      background-color: #f3f4f6;
+      transition: all 0.3s ease;
+    }
+    
+    .dark .contact-input {
+      background-color: #1f2937;
+      color: #f3f4f6;
+    }
+    
+    .contact-input:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(242, 108, 79, 0.5);
+    }
+    
+    .contact-textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+    
+    .contact-info-box {
+      transition: all 0.3s ease;
+    }
+    
+    .contact-info-box:hover {
+      transform: translateY(-5px);
+    }
+    
+    .contact-icon {
+      color: #F26C4F;
+      font-size: 1.5rem;
+    }
+  </style>
+</head>
+<body class="bg-white dark:bg-dark-primary text-gray-900 dark:text-white font-poppins transition-colors duration-300">
+  <!-- Navigation -->
+  <header class="max-w-7xl mx-auto p-4 flex justify-between items-center relative z-20">
+    <div class="font-bold text-xl">Bentos</div>
+    
+    <!-- Desktop Navigation -->
+    <nav class="hidden md:flex space-x-6">
+      <a href="index.html" class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">Home</a>
+      <a href="about.html" class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">About</a>
+      <a href="#" class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">Services</a>
+      <a href="#" class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">Works</a>
+      <a href="contact.html" class="text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300">Contact</a>
+    </nav>
+    
+    <div class="flex items-center">
+      <!-- Theme Toggle Button -->
+      <button id="theme-toggle" class="theme-toggle mr-4 text-xl text-gray-600 dark:text-gray-300">
+        <i class="ri-sun-line dark:hidden"></i>
+        <i class="ri-moon-line hidden dark:block"></i>
+      </button>
+      
+      <!-- Hire Me Button -->
+      <button class="bg-blue-600 text-white px-4 py-1 rounded-full text-sm flex items-center">
+        Hire Me <i class="ri-arrow-right-line ml-2"></i>
+      </button>
+      
+      <!-- Mobile Menu Toggle -->
+      <button class="md:hidden text-gray-900 dark:text-white ml-4" id="menu-toggle">
+        <i class="ri-menu-line text-2xl"></i>
+      </button>
+    </div>
+  </header>
+  
+  <!-- Mobile Menu -->
+  <div class="fixed top-0 left-0 h-full w-64 bg-gray-100 dark:bg-gray-900 z-30 p-6 mobile-menu" id="mobile-menu">
+    <div class="flex justify-between items-center mb-8">
+      <div class="font-bold text-xl">Bentos</div>
+      <button id="close-menu">
+        <i class="ri-close-line text-2xl"></i>
+      </button>
+    </div>
+    <nav class="flex flex-col space-y-4">
+      <a href="index.html" class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white py-2 border-b border-gray-200 dark:border-gray-800">Home</a>
+      <a href="about.html" class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white py-2 border-b border-gray-200 dark:border-gray-800">About</a>
+      <a href="#" class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white py-2 border-b border-gray-200 dark:border-gray-800">Services</a>
+      <a href="#" class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white py-2 border-b border-gray-200 dark:border-gray-800">Works</a>
+      <a href="contact.html" class="text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300 py-2 border-b border-gray-200 dark:border-gray-800">Contact</a>
+    </nav>
+    <div class="flex mt-6 items-center">
+      <!-- Mobile Theme Toggle -->
+      <button id="mobile-theme-toggle" class="theme-toggle mr-4 text-xl text-gray-600 dark:text-gray-300">
+        <i class="ri-sun-line dark:hidden"></i>
+        <i class="ri-moon-line hidden dark:block"></i>
+      </button>
+      <button class="bg-blue-600 text-white px-4 py-2 rounded-full text-sm flex items-center">
+        Hire Me <i class="ri-arrow-right-line ml-2"></i>
+      </button>
+    </div>
+  </div>
+  
+  <!-- Overlay for Mobile Menu -->
+  <div class="fixed inset-0 bg-black bg-opacity-50 z-20 hidden" id="overlay"></div>
+
+  <!-- Main Content -->
+  <div class="max-w-7xl mx-auto px-4 py-12">
+    <!-- Page Title -->
+    <div class="text-center mb-12 animate-fade-in">
+      <h1 class="text-4xl md:text-5xl font-bold">Get in Touch with Me!</h1>
+      <p class="text-gray-600 dark:text-gray-400 mt-4 max-w-2xl mx-auto">
+        Feel free to reach out for collaborations, opportunities, or just to say hello!
+      </p>
+    </div>
+    
+    <!-- Contact Content -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Contact Info -->
+      <div class="md:col-span-1">
+        <div class="bg-gray-100 dark:bg-gray-900 rounded-xl p-6 shadow-md animate-fade-in">
+          <!-- Location -->
+          <div class="contact-info-box mb-8">
+            <div class="flex items-start">
+              <div class="bg-gray-200 dark:bg-gray-800 rounded-lg p-3 mr-4">
+                <i class="ri-map-pin-fill contact-icon"></i>
+              </div>
+              <div>
+                <h3 class="font-semibold text-lg mb-1">Our Office:</h3>
+                <p class="text-gray-600 dark:text-gray-400">Jurain, Dhaka Bangladesh</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Phone -->
+          <div class="contact-info-box mb-8">
+            <div class="flex items-start">
+              <div class="bg-gray-200 dark:bg-gray-800 rounded-lg p-3 mr-4">
+                <i class="ri-phone-fill contact-icon"></i>
+              </div>
+              <div>
+                <h3 class="font-semibold text-lg mb-1">Contact Number:</h3>
+                <p class="text-gray-600 dark:text-gray-400">+1234321321</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Email -->
+          <div class="contact-info-box">
+            <div class="flex items-start">
+              <div class="bg-gray-200 dark:bg-gray-800 rounded-lg p-3 mr-4">
+                <i class="ri-mail-fill contact-icon"></i>
+              </div>
+              <div>
+                <h3 class="font-semibold text-lg mb-1">Email Us:</h3>
+                <p class="text-gray-600 dark:text-gray-400">websitename@mail.com</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Contact Form -->
+      <div class="md:col-span-2">
+        <div class="bg-gray-100 dark:bg-gray-900 rounded-xl p-6 shadow-md animate-fade-in">
+          <form>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              <div>
+                <label for="fullname" class="block mb-2 text-sm font-medium">Full Name</label>
+                <input type="text" id="fullname" class="contact-input" placeholder="Your name">
+              </div>
+              <div>
+                <label for="email" class="block mb-2 text-sm font-medium">Email Address</label>
+                <input type="email" id="email" class="contact-input" placeholder="Your email">
+              </div>
+            </div>
+            
+            <div class="mb-6">
+              <label for="message" class="block mb-2 text-sm font-medium">Your Message</label>
+              <textarea id="message" class="contact-input contact-textarea" placeholder="Write your message here..."></textarea>
+            </div>
+            
+            <button type="submit" class="bg-orange-500 text-white px-6 py-3 rounded-lg font-medium flex items-center justify-center mx-auto">
+              Send Me Message <i class="ri-send-plane-fill ml-2"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Call to Action Section -->
+  <div class="max-w-7xl mx-auto px-4 mt-16 mb-16">
+    <div class="bg-gray-100 dark:bg-gray-900 rounded-xl p-6 md:p-12 text-center shadow-md">
+      <h2 class="text-2xl md:text-3xl font-bold">Are You Ready to kickstart your project with<br class="hidden md:block">a touch of magic?</h2>
+      
+      <p class="text-gray-600 dark:text-gray-400 mt-6 max-w-3xl mx-auto">
+        Reach out and let's make it happen! ✨ I'm also available for full-time or part-time opportunities to push the boundaries of design and deliver exceptional work.
+      </p>
+      
+      <button class="bg-orange-500 text-white px-6 py-3 rounded-lg mt-8 font-medium inline-flex items-center">
+        Let's Talk <i class="ri-arrow-right-line ml-2"></i>
+      </button>
+    </div>
+  </div>
+  
+  <!-- Footer -->
+  <footer class="max-w-7xl mx-auto px-4 py-6 border-t border-gray-200 dark:border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4">
+    <p class="text-sm text-gray-500">Copyright ©2023 <span class="text-orange-500">Bentos</span>. All Rights Reserved.</p>
+    <div class="text-sm text-gray-500 flex items-center">
+      Crafted with <i class="ri-heart-fill text-red-500 mx-1"></i> Tanvir Hossain
+    </div>
+  </footer>
+
+  <!-- JavaScript for functionality -->
+  <script>
+    $(document).ready(function(){
+      // Theme toggle functionality
+      function setTheme(isDark) {
+        if (isDark) {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+        }
+      }
+      
+      // Check for saved theme preference or use system preference
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) {
+        setTheme(savedTheme === 'dark');
+      } else {
+        // Check if the user has a dark theme preference in their OS
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        setTheme(prefersDark);
+      }
+      
+      // Toggle theme when button is clicked
+      $('#theme-toggle, #mobile-theme-toggle').click(function() {
+        const isDark = document.documentElement.classList.contains('dark');
+        setTheme(!isDark);
+      });
+      
+      // Mobile menu functionality
+      const menuToggle = document.getElementById('menu-toggle');
+      const closeMenu = document.getElementById('close-menu');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const overlay = document.getElementById('overlay');
+      
+      // Open menu
+      menuToggle.addEventListener('click', function() {
+        mobileMenu.classList.add('active');
+        overlay.classList.remove('hidden');
+        document.body.style.overflow = 'hidden'; // Prevent scrolling
+      });
+      
+      // Close menu
+      function closeMenuFunction() {
+        mobileMenu.classList.remove('active');
+        overlay.classList.add('hidden');
+        document.body.style.overflow = 'auto'; // Allow scrolling
+      }
+      
+      closeMenu.addEventListener('click', closeMenuFunction);
+      overlay.addEventListener('click', closeMenuFunction);
+      
+      // Responsive adjustments
+      function handleResize() {
+        if (window.innerWidth >= 768) { // md breakpoint
+          closeMenuFunction();
+        }
+      }
+      
+      window.addEventListener('resize', handleResize);
+      
+      // Animation for elements when scrolling into view
+      const animateElements = document.querySelectorAll('.animate-fade-in');
+      animateElements.forEach(element => {
+        element.classList.add('animate__animated', 'animate__fadeIn');
+      });
+      
+      // Form submission handling (prevent default for demo)
+      $('form').submit(function(e) {
+        e.preventDefault();
+        // Here you would typically handle the form submission via AJAX
+        alert('Form submitted successfully! This is just a demo - no data was sent.');
+      });
+    });
+  </script>
+</body>
+</html>

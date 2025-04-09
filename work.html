@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bentos Walker - Works</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts - Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <!-- Remix Icon -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+  <!-- Additional CDNs -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script>
+    // Configure tailwind for dark mode
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            poppins: ['Poppins', 'sans-serif'],
+          },
+          colors: {
+            orange: {
+              500: '#F26C4F'
+            },
+            // Adding dark and light background colors like in the landing page
+            'dark-primary': '#111',
+            'dark-secondary': '#1f2937',
+            'light-primary': '#ffffff',
+            'light-secondary': '#f3f4f6',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    .animate-fade-in {
+      animation: fadeIn 1s ease-in;
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+    .mobile-menu {
+      transform: translateX(-100%);
+      transition: transform 0.3s ease-in-out;
+    }
+    .mobile-menu.active {
+      transform: translateX(0);
+    }
+    
+    /* Theme toggle styles */
+    .theme-toggle {
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .theme-toggle:hover {
+      transform: rotate(15deg);
+    }
+    
+    /* Portfolio tabs styles */
+    .portfolio-tab {
+      position: relative;
+      cursor: pointer;
+      padding-bottom: 5px;
+      transition: color 0.3s ease;
+    }
+    
+    .portfolio-tab.active {
+      color: #F26C4F;
+    }
+    
+    .portfolio-tab.active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 70%;
+      height: 2px;
+      background-color: #F26C4F;
+    }
+    
+    /* Portfolio item hover effect */
+    .portfolio-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 0.75rem;
+      transition: transform 0.3s ease;
+    }
+    
+    .portfolio-item:hover {
+      transform: translateY(-5px);
+    }
+    
+    .portfolio-item img {
+      transition: transform 0.5s ease;
+    }
+    
+    .portfolio-item:hover img {
+      transform: scale(1.05);
+    }
+    
+    .portfolio-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.1);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .portfolio-item:hover .portfolio-overlay {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body class="bg-white dark:bg-dark-primary text-gray-900 dark:text-white font-poppins transition-colors duration-300">
+  <!-- Navigation -->
+  <header class="max-w-7xl mx-auto p-4 flex justify-between items-center relative z-20">
+    <div class="font-bold text-xl">Bentos</div>
+    
+    <!-- Desktop Navigation -->
+    <nav class="hidden md:flex space-x-6">
+      <a href="index.html" class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">Home</a>
+      <a href="about.html" class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">About</a>
+      <a href="#" class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">Services</a>
+      <a href="works.html" class="text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300">Works</a>
+      <a href="contact.html" class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">Contact</a>
+    </nav>
+    
+    <div class="flex items-center">
+      <!-- Theme Toggle Button -->
+      <button id="theme-toggle" class="theme-toggle mr-4 text-xl text-gray-600 dark:text-gray-300">
+        <i class="ri-sun-line dark:hidden"></i>
+        <i class="ri-moon-line hidden dark:block"></i>
+      </button>
+      
+      <!-- Hire Me Button -->
+      <button class="bg-blue-600 text-white px-4 py-1 rounded-full text-sm flex items-center">
+        Hire Me <i class="ri-arrow-right-line ml-2"></i>
+      </button>
+      
+      <!-- Mobile Menu Toggle -->
+      <button class="md:hidden text-gray-900 dark:text-white ml-4" id="menu-toggle">
+        <i class="ri-menu-line text-2xl"></i>
+      </button>
+    </div>
+  </header>
+  
+  <!-- Mobile Menu -->
+  <div class="fixed top-0 left-0 h-full w-64 bg-gray-100 dark:bg-gray-900 z-30 p-6 mobile-menu" id="mobile-menu">
+    <div class="flex justify-between items-center mb-8">
+      <div class="font-bold text-xl">Bentos</div>
+      <button id="close-menu">
+        <i class="ri-close-line text-2xl"></i>
+      </button>
+    </div>
+    <nav class="flex flex-col space-y-4">
+      <a href="index.html" class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white py-2 border-b border-gray-200 dark:border-gray-800">Home</a>
+      <a href="about.html" class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white py-2 border-b border-gray-200 dark:border-gray-800">About</a>
+      <a href="#" class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white py-2 border-b border-gray-200 dark:border-gray-800">Services</a>
+      <a href="works.html" class="text-gray-900 dark:text-white hover:text-gray-600 dark:hover:text-gray-300 py-2 border-b border-gray-200 dark:border-gray-800">Works</a>
+      <a href="contact.html" class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white py-2 border-b border-gray-200 dark:border-gray-800">Contact</a>
+    </nav>
+    <div class="flex mt-6 items-center">
+      <!-- Mobile Theme Toggle -->
+      <button id="mobile-theme-toggle" class="theme-toggle mr-4 text-xl text-gray-600 dark:text-gray-300">
+        <i class="ri-sun-line dark:hidden"></i>
+        <i class="ri-moon-line hidden dark:block"></i>
+      </button>
+      <button class="bg-blue-600 text-white px-4 py-2 rounded-full text-sm flex items-center">
+        Hire Me <i class="ri-arrow-right-line ml-2"></i>
+      </button>
+    </div>
+  </div>
+  
+  <!-- Overlay for Mobile Menu -->
+  <div class="fixed inset-0 bg-black bg-opacity-50 z-20 hidden" id="overlay"></div>
+
+  <!-- Main Content -->
+  <div class="max-w-7xl mx-auto px-4 py-8">
+    <!-- Works Title Section -->
+    <div class="text-center mb-16 animate-fade-in">
+      <h1 class="text-4xl md:text-5xl font-bold mb-6">My Works</h1>
+      <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+        Check out some of my design projects, meticulously crafted with love and dedication, each one reflecting the passion and soul I poured into every detail.
+      </p>
+    </div>
+    
+    <!-- Portfolio Tabs -->
+    <div class="flex flex-wrap gap-8 justify-center mb-12">
+      <div class="portfolio-tab active" data-filter="all">Show All</div>
+      <div class="portfolio-tab" data-filter="design">Design</div>
+      <div class="portfolio-tab" data-filter="branding">Branding</div>
+      <div class="portfolio-tab" data-filter="marketing">Marketing</div>
+      <div class="portfolio-tab" data-filter="game">Game</div>
+    </div>
+    
+    <!-- Portfolio Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Project 1 -->
+      <div class="portfolio-item animate-fade-in" data-category="branding">
+        <div class="relative overflow-hidden rounded-xl">
+          <img src="/api/placeholder/400/320" alt="Mobile App Design" class="w-full h-64 object-cover">
+          <div class="portfolio-overlay"></div>
+        </div>
+        <div class="mt-4">
+          <div class="text-sm text-gray-500 dark:text-gray-400">Branding</div>
+          <h3 class="text-xl font-semibold">Mobile Application Design</h3>
+        </div>
+      </div>
+      
+      <!-- Project 2 -->
+      <div class="portfolio-item animate-fade-in" data-category="design">
+        <div class="relative overflow-hidden rounded-xl">
+          <img src="/api/placeholder/400/320" alt="Website Makeup Design" class="w-full h-64 object-cover">
+          <div class="portfolio-overlay"></div>
+        </div>
+        <div class="mt-4">
+          <div class="text-sm text-gray-500 dark:text-gray-400">Design</div>
+          <h3 class="text-xl font-semibold">Website Makeup Design</h3>
+        </div>
+      </div>
+      
+      <!-- Project 3 -->
+      <div class="portfolio-item animate-fade-in" data-category="branding">
+        <div class="relative overflow-hidden rounded-xl">
+          <img src="/api/placeholder/400/320" alt="Brand Identity" class="w-full h-64 object-cover">
+          <div class="portfolio-overlay"></div>
+        </div>
+        <div class="mt-4">
+          <div class="text-sm text-gray-500 dark:text-gray-400">Graphics</div>
+          <h3 class="text-xl font-semibold">Brand Identity and Motion Design</h3>
+        </div>
+      </div>
+      
+      <!-- Project 4 -->
+      <div class="portfolio-item animate-fade-in" data-category="game">
+        <div class="relative overflow-hidden rounded-xl">
+          <img src="/api/placeholder/400/320" alt="Game App" class="w-full h-64 object-cover">
+          <div class="portfolio-overlay"></div>
+        </div>
+        <div class="mt-4">
+          <div class="text-sm text-gray-500 dark:text-gray-400">Game</div>
+          <h3 class="text-xl font-semibold">Mobile Application Design</h3>
+        </div>
+      </div>
+      
+      <!-- Project 5 -->
+      <div class="portfolio-item animate-fade-in" data-category="branding">
+        <div class="relative overflow-hidden rounded-xl">
+          <img src="/api/placeholder/400/320" alt="Application Design" class="w-full h-64 object-cover">
+          <div class="portfolio-overlay"></div>
+        </div>
+        <div class="mt-4">
+          <div class="text-sm text-gray-500 dark:text-gray-400">Branding</div>
+          <h3 class="text-xl font-semibold">Application Design</h3>
+        </div>
+      </div>
+      
+      <!-- Project 6 -->
+      <div class="portfolio-item animate-fade-in" data-category="design">
+        <div class="relative overflow-hidden rounded-xl">
+          <img src="/api/placeholder/400/320" alt="Website Development" class="w-full h-64 object-cover">
+          <div class="portfolio-overlay"></div>
+        </div>
+        <div class="mt-4">
+          <div class="text-sm text-gray-500 dark:text-gray-400">Design</div>
+          <h3 class="text-xl font-semibold">Website Development</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Call to Action Section -->
+  <div class="max-w-7xl mx-auto px-4 mt-16 mb-16">
+    <div class="bg-gray-100 dark:bg-gray-900 rounded-xl p-6 md:p-12 text-center shadow-md">
+      <h2 class="text-2xl md:text-3xl font-bold">Are You Ready to kickstart your project with<br class="hidden md:block">a touch of magic?</h2>
+      
+      <p class="text-gray-600 dark:text-gray-400 mt-6 max-w-3xl mx-auto">
+        Reach out and let's make it happen! ✨ I'm also available for full-time or part-time opportunities to push the boundaries of design and deliver exceptional work.
+      </p>
+      
+      <button class="bg-orange-500 text-white px-6 py-3 rounded-lg mt-8 font-medium inline-flex items-center">
+        Let's Talk <i class="ri-arrow-right-line ml-2"></i>
+      </button>
+    </div>
+  </div>
+  
+  <!-- Footer -->
+  <footer class="max-w-7xl mx-auto px-4 py-6 border-t border-gray-200 dark:border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4">
+    <p class="text-sm text-gray-500">Copyright ©2023 <span class="text-orange-500">Bentos</span>. All Rights Reserved.</p>
+    <div class="text-sm text-gray-500 flex items-center">
+      Crafted with <i class="ri-heart-fill text-red-500 mx-1"></i> Tanvir Hossain
+    </div>
+  </footer>
+
+  <!-- JavaScript for functionality -->
+  <script>
+    $(document).ready(function(){
+      // Theme toggle functionality
+      function setTheme(isDark) {
+        if (isDark) {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+        }
+      }
+      
+      // Check for saved theme preference or use system preference
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) {
+        setTheme(savedTheme === 'dark');
+      } else {
+        // Check if the user has a dark theme preference in their OS
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        setTheme(prefersDark);
+      }
+      
+      // Toggle theme when button is clicked
+      $('#theme-toggle, #mobile-theme-toggle').click(function() {
+        const isDark = document.documentElement.classList.contains('dark');
+        setTheme(!isDark);
+      });
+      
+      // Mobile menu functionality
+      const menuToggle = document.getElementById('menu-toggle');
+      const closeMenu = document.getElementById('close-menu');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const overlay = document.getElementById('overlay');
+      
+      // Open menu
+      menuToggle.addEventListener('click', function() {
+        mobileMenu.classList.add('active');
+        overlay.classList.remove('hidden');
+        document.body.style.overflow = 'hidden'; // Prevent scrolling
+      });
+      
+      // Close menu
+      function closeMenuFunction() {
+        mobileMenu.classList.remove('active');
+        overlay.classList.add('hidden');
+        document.body.style.overflow = 'auto'; // Allow scrolling
+      }
+      
+      closeMenu.addEventListener('click', closeMenuFunction);
+      overlay.addEventListener('click', closeMenuFunction);
+      
+      // Responsive adjustments
+      function handleResize() {
+        if (window.innerWidth >= 768) { // md breakpoint
+          closeMenuFunction();
+        }
+      }
+      
+      window.addEventListener('resize', handleResize);
+      
+      // Portfolio filtering
+      $('.portfolio-tab').click(function() {
+        // Update active tab
+        $('.portfolio-tab').removeClass('active');
+        $(this).addClass('active');
+        
+        const filter = $(this).data('filter');
+        
+        if (filter === 'all') {
+          // Show all items
+          $('.portfolio-item').show();
+        } else {
+          // Hide all items
+          $('.portfolio-item').hide();
+          // Show only items with matching category
+          $(`.portfolio-item[data-category="${filter}"]`).show();
+        }
+        
+        // Re-apply animations
+        $('.portfolio-item:visible').each(function(index) {
+          const item = $(this);
+          // Stagger the animation
+          setTimeout(function() {
+            item.addClass('animate__animated animate__fadeIn');
+          }, index * 100);
+        });
+      });
+      
+      // Animation for elements when loading
+      const animateElements = document.querySelectorAll('.animate-fade-in');
+      animateElements.forEach((element, index) => {
+        setTimeout(() => {
+          element.classList.add('animate__animated', 'animate__fadeIn');
+        }, index * 100);
+      });
+    });
+  </script>
+</body>
+</html>
